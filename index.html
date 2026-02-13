@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Schadenfreude Boys Get AGI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.7;
+            padding: 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: linear-gradient(180deg, #1a0a2e 0%, #0a0a0a 100%);
+            border-bottom: 1px solid #222;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3em;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .hero .warning {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 0.9em;
+            color: #ff6b6b;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .intro {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            font-size: 1.05em;
+        }
+
+        .intro p { margin-bottom: 16px; }
+        .intro p:last-child { margin-bottom: 0; }
+        .intro strong { color: #ffd93d; }
+
+        .step {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -14px;
+            left: 24px;
+            background: #4d96ff;
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.85em;
+            padding: 4px 14px;
+            border-radius: 20px;
+        }
+
+        .step h2 {
+            font-size: 1.3em;
+            margin-bottom: 16px;
+            margin-top: 8px;
+            color: #fff;
+        }
+
+        .step p { margin-bottom: 12px; }
+        .step p:last-child { margin-bottom: 0; }
+
+        .step a {
+            color: #4d96ff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(77, 150, 255, 0.3);
+        }
+
+        .step a:hover { border-bottom-color: #4d96ff; }
+
+        .step code {
+            background: #1a1a2e;
+            color: #6bcb77;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .step .command-block {
+            background: #1a1a2e;
+            border: 1px solid #2a2a4e;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 12px 0;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #6bcb77;
+            overflow-x: auto;
+        }
+
+        .step .note {
+            background: rgba(255, 217, 61, 0.08);
+            border-left: 3px solid #ffd93d;
+            padding: 12px 16px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .step .danger {
+            background: rgba(255, 107, 107, 0.08);
+            border-left: 3px solid #ff6b6b;
+            padding: 12px 16px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .step ul {
+            margin: 12px 0;
+            padding-left: 24px;
+        }
+
+        .step li { margin-bottom: 8px; }
+
+        .time-estimate {
+            display: inline-block;
+            background: rgba(107, 203, 119, 0.1);
+            border: 1px solid rgba(107, 203, 119, 0.3);
+            color: #6bcb77;
+            font-size: 0.8em;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-left: 12px;
+        }
+
+        .cost-box {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .cost-box h2 { 
+            color: #ffd93d; 
+            margin-bottom: 16px;
+            font-size: 1.3em;
+        }
+
+        .cost-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .cost-item {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .cost-item .label { color: #888; font-size: 0.85em; }
+        .cost-item .value { color: #fff; font-size: 1.4em; font-weight: 700; margin-top: 4px; }
+
+        .chat-bubble {
+            background: #1a2e1a;
+            border: 1px solid #2a4e2a;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            position: relative;
+        }
+
+        .chat-bubble .sender {
+            font-size: 0.8em;
+            color: #6bcb77;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .chat-bubble.atlas {
+            background: #1a1a2e;
+            border-color: #2a2a4e;
+        }
+
+        .chat-bubble.atlas .sender { color: #4d96ff; }
+
+        .finale {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .finale h2 {
+            font-size: 2em;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .finale p {
+            color: #888;
+            font-size: 1.1em;
+        }
+
+        .boys-list {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .boy {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 16px 24px;
+            text-align: center;
+        }
+
+        .boy .name { font-weight: 700; color: #fff; }
+        .boy .status { font-size: 0.8em; color: #888; margin-top: 4px; }
+        .boy .status.active { color: #6bcb77; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2em; }
+            .cost-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>The Schadenfreude Boys<br>Get AGI</h1>
+    <p class="subtitle">A step-by-step guide to ruining your productivity<br>by giving it to a robot instead</p>
+    <div class="warning">⚠️ Side effects include: mass unemployment of your to-do list, talking to your phone like a schizophrenic, and explaining to your wife why you're up at 1am saying "no Atlas, deploy it to Vercel"</div>
+</div>
+
+<div class="container">
+
+    <div class="intro">
+        <p>Right lads. I've been building something absolutely mental for the last two weeks and I need you all to have it immediately.</p>
+        <p>It's called <strong>OpenClaw</strong>. It's an open-source AI assistant that runs on a server, connects to your Telegram (or Discord/WhatsApp/whatever), and basically becomes your second brain. It reads your emails, manages your calendar, remembers everything, builds software, drafts replies, and runs overnight while you sleep.</p>
+        <p>I'm not exaggerating. I have not hired a single person. <strong>I'm operating like a 15-person team with one AI assistant I talk to on Telegram.</strong></p>
+        <p>It took me about 20 minutes to set up. Here's how you do it.</p>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step">
+        <div class="step-number">STEP 1</div>
+        <h2>Get an Anthropic API Key <span class="time-estimate">2 min</span></h2>
+        <p>This is the brain. Claude is the AI model that powers everything. You need an API key.</p>
+        <ul>
+            <li>Go to <a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a></li>
+            <li>Sign up / sign in</li>
+            <li>Go to <strong>API Keys</strong> → Create a new key</li>
+            <li>Copy it somewhere safe. You'll need it in Step 3.</li>
+            <li>Add £20 credit to start (this lasts ages - I spend about £5-10/day and I hammer it)</li>
+        </ul>
+        <div class="note">💡 The model you want is <strong>Claude Sonnet 4</strong> to start. It's the sweet spot of smart + cheap. You can upgrade to Opus later if you want the big brain.</div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+        <div class="step-number">STEP 2</div>
+        <h2>Create a Telegram Bot <span class="time-estimate">2 min</span></h2>
+        <p>This is how you'll talk to your AI. Through Telegram. Like texting a mate.</p>
+        <ul>
+            <li>Open Telegram and search for <strong>@BotFather</strong></li>
+            <li>Send <code>/newbot</code></li>
+            <li>Give it a name (e.g., "Atlas" or "Jarvis" or "Kevin" - whatever you want)</li>
+            <li>Copy the bot token it gives you (looks like <code>123456789:AAHdqTcvCH1vGWJx...</code>)</li>
+        </ul>
+        <div class="note">💡 This is YOUR bot. Only you can talk to it. Nobody else can see your messages or access your data.</div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+        <div class="step-number">STEP 3</div>
+        <h2>Deploy on Railway <span class="time-estimate">5 min</span></h2>
+        <p>Railway is a cloud hosting platform. It runs your AI 24/7 so you don't have to leave your laptop on. This is the "server" bit.</p>
+        <ol style="padding-left: 24px;">
+            <li style="margin-bottom: 12px;">Go to <a href="https://railway.com" target="_blank">railway.com</a> and sign up (use GitHub login, it's easiest)</li>
+            <li style="margin-bottom: 12px;">Click this one-click deploy link: <a href="https://railway.com/deploy/openclaw" target="_blank"><strong>Deploy OpenClaw on Railway</strong></a></li>
+            <li style="margin-bottom: 12px;">It'll ask you to set some variables:
+                <div class="command-block">
+SETUP_PASSWORD = (pick something, you'll need it once)<br>
+PORT = 8080
+                </div>
+            </li>
+            <li style="margin-bottom: 12px;">Click <strong>Deploy</strong> and wait ~2 minutes</li>
+            <li style="margin-bottom: 12px;">Once deployed, go to your service → <strong>Settings → Networking</strong> → Enable <strong>Public Networking</strong> on port 8080</li>
+            <li style="margin-bottom: 12px;">Also go to <strong>Volumes</strong> → Add a volume mounted at <code>/data</code> (this saves your stuff between restarts)</li>
+            <li style="margin-bottom: 12px;">Find your public URL in Settings → Domains (something like <code>your-thing.up.railway.app</code>)</li>
+        </ol>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step">
+        <div class="step-number">STEP 4</div>
+        <h2>Run the Setup Wizard <span class="time-estimate">3 min</span></h2>
+        <p>Open your Railway URL with <code>/setup</code> at the end:</p>
+        <div class="command-block">https://your-thing.up.railway.app/setup</div>
+        <p>Enter your SETUP_PASSWORD, then:</p>
+        <ul>
+            <li>Paste your <strong>Anthropic API key</strong> from Step 1</li>
+            <li>Paste your <strong>Telegram bot token</strong> from Step 2</li>
+            <li>Select <strong>Claude Sonnet 4</strong> as your model</li>
+            <li>Click <strong>Run Setup</strong></li>
+        </ul>
+        <p>That's it. That's the whole setup.</p>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step">
+        <div class="step-number">STEP 5</div>
+        <h2>Talk to Your New Brain <span class="time-estimate">∞</span></h2>
+        <p>Open Telegram. Find your bot. Send it a message. Any message.</p>
+        
+        <div class="chat-bubble">
+            <div class="sender">You</div>
+            Hey, are you alive?
+        </div>
+        <div class="chat-bubble atlas">
+            <div class="sender">Your AI</div>
+            I'm here. What do you need?
+        </div>
+
+        <p>If Telegram asks for a pairing code, go back to your <code>/setup</code> page and approve it there.</p>
+
+        <p>Now start asking it to do things. Seriously. Anything.</p>
+        <ul>
+            <li>"Summarise my last 10 emails" (once you connect Gmail)</li>
+            <li>"What's on my calendar tomorrow?"</li>
+            <li>"Write me a cold email to [person] about [thing]"</li>
+            <li>"Research [topic] and give me the key takeaways"</li>
+            <li>"Build me a simple website that does [thing]"</li>
+            <li>"Remind me to call Steve tomorrow at 3pm"</li>
+        </ul>
+
+        <div class="danger">🤯 It can also: browse the web, write and run code, create files, search the internet, remember your preferences, and operate autonomously on a schedule. The more you use it, the more it learns about you.</div>
+    </div>
+
+    <!-- COST -->
+    <div class="cost-box">
+        <h2>💰 What This Costs</h2>
+        <div class="cost-grid">
+            <div class="cost-item">
+                <div class="label">Railway hosting</div>
+                <div class="value">~£5/mo</div>
+            </div>
+            <div class="cost-item">
+                <div class="label">Anthropic API (Sonnet)</div>
+                <div class="value">~£3-8/mo</div>
+            </div>
+            <div class="cost-item">
+                <div class="label">Total for casual use</div>
+                <div class="value">~£8-13/mo</div>
+            </div>
+            <div class="cost-item">
+                <div class="label">Total if you go full Rees</div>
+                <div class="value">~£150-300/mo</div>
+            </div>
+        </div>
+        <p style="margin-top: 16px; color: #888; font-size: 0.85em;">The £150-300 is if you upgrade to Claude Opus (the big brain) and use it like I do - all day, every day, with autonomous overnight work. You won't need that. Start with Sonnet.</p>
+    </div>
+
+    <!-- TIPS -->
+    <div class="step">
+        <div class="step-number">PRO TIPS</div>
+        <h2>Things I Wish I Knew on Day 1</h2>
+        <ul>
+            <li><strong>Voice notes work.</strong> Just send it a voice note on Telegram. It transcribes and responds. This is the killer feature - you can talk to your AI while driving, cooking, walking.</li>
+            <li><strong>Give it a personality.</strong> Create a file called SOUL.md in the workspace. Tell it who it is, how to talk, what you like. Mine is called Atlas and it calls me on my bullshit.</li>
+            <li><strong>Tell it about yourself.</strong> Create USER.md. Your timezone, your job, your preferences. The more it knows, the more useful it gets.</li>
+            <li><strong>It has a web UI.</strong> Go to <code>your-url.up.railway.app/openclaw</code> for the control panel.</li>
+            <li><strong>It remembers things.</strong> But only if you tell it to, or set up memory files. Ask it to "remember that I prefer X" and it'll note it down.</li>
+            <li><strong>Start small.</strong> Don't try to do everything I'm doing on day 1. Just use it as a smart Telegram buddy for a week. Then start connecting things.</li>
+        </ul>
+    </div>
+
+    <!-- FINALE -->
+    <div class="finale">
+        <h2>Welcome to the future, boys.</h2>
+        <p>Any questions, you know where to find me.<br>Or just ask your new AI. It's probably smarter than I am.</p>
+        
+        <div class="boys-list">
+            <div class="boy">
+                <div class="name">Rees</div>
+                <div class="status active">✅ Online since Day 1</div>
+            </div>
+            <div class="boy">
+                <div class="name">Felix</div>
+                <div class="status">⏳ Pending</div>
+            </div>
+            <div class="boy">
+                <div class="name">Justin</div>
+                <div class="status">⏳ Pending</div>
+            </div>
+            <div class="boy">
+                <div class="name">Steve</div>
+                <div class="status">⏳ Pending</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
